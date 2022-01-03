@@ -2,12 +2,12 @@
 #include <string>
 #include <vector>
 
-#include "StringDefs.h"
+#include <StringDefs.h>
 
 // GENOME DEFINITION
 // A genome is an array of genes.
 // A gene has a set of characters designated as: TSSTTPW
-// -> T  [Type]		(Sensory / Calculating / Motor) 
+// -> T  [Type]		(Sensory / Calculating / Motor)
 // -> SS [Source]   (00 - FF)
 // -> TT [Target]   (00 - FF)
 // -> P  [Positive] (T/F)
@@ -20,31 +20,37 @@
 struct Game;
 struct Connection;
 
-enum ConnectionType {
+enum ConnectionType
+{
 	Undefined = -1,
 	SensorToNeuron,
 	NeuronToNeuron
 };
 
-struct Sensor {
+struct Sensor
+{
 	float strength = 0;
 };
 
-struct Neuron {
+struct Neuron
+{
 	float strength = 0;
 	std::vector<Connection> connections;
 };
 
-struct Connection {
+struct Connection
+{
 	ConnectionType type;
 	float weight = 1;
 };
 
-struct Brain {
+struct Brain
+{
 	std::vector<Neuron> neurons;
 };
 
-struct AI {
+struct AI
+{
 	Brain brain;
 	std::vector<Sensor> sensors;
 	std::vector<Neuron> motors;
@@ -52,5 +58,5 @@ struct AI {
 	String GENOME = L"";
 };
 
-void AssembleBrain(AI* ai);
-void ProcessAI(AI* ai, Game* game);
+void AssembleBrain(AI *ai);
+void ProcessAI(AI *ai, Game *game);

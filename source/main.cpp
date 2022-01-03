@@ -2,10 +2,10 @@
 #include <string>
 #include <iostream>
 
-#include "VirtualKeycodes.h"
-#include "Game.h"
-#include "StringDefs.h"
-#include "AI.h"
+#include <VirtualKeycodes.h>
+#include <Game.h>
+#include <StringDefs.h>
+#include <AI.h>
 
 DWORD EnableVirtualTerminal(HANDLE handleOut) {
 
