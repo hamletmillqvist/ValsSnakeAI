@@ -20,37 +20,31 @@
 struct Game;
 struct Connection;
 
-enum ConnectionType
-{
+enum ConnectionType {
 	Undefined = -1,
 	SensorToNeuron,
 	NeuronToNeuron
 };
 
-struct Sensor
-{
+struct Sensor {
 	float strength = 0;
 };
 
-struct Neuron
-{
+struct Neuron {
 	float strength = 0;
 	std::vector<Connection> connections;
 };
 
-struct Connection
-{
+struct Connection {
 	ConnectionType type;
 	float weight = 1;
 };
 
-struct Brain
-{
+struct Brain {
 	std::vector<Neuron> neurons;
 };
 
-struct AI
-{
+struct AI {
 	Brain brain;
 	std::vector<Sensor> sensors;
 	std::vector<Neuron> motors;
@@ -58,5 +52,5 @@ struct AI
 	String GENOME = L"";
 };
 
-void AssembleBrain(AI *ai);
-void ProcessAI(AI *ai, Game *game);
+void AssembleBrain(AI* ai);
+void ProcessAI(AI* ai, Game* game);

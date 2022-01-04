@@ -11,32 +11,28 @@ DWORD EnableVirtualTerminal(HANDLE handleOut)
 {
 
     DWORD dwMode = 0;
-    if (!GetConsoleMode(handleOut, &dwMode))
-    {
+    if (!GetConsoleMode(handleOut, &dwMode)) {
         return GetLastError();
     }
 
     dwMode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
-    if (!SetConsoleMode(handleOut, dwMode))
-    {
+    if (!SetConsoleMode(handleOut, dwMode)) {
         return GetLastError();
     }
 
     return ERROR_SUCCESS;
 }
 
-int main(int argc, char **argv)
+int main(int argc, char** argv)
 {
     // Set output mode to handle virtual terminal sequences
     HANDLE handleOut = GetStdHandle(STD_OUTPUT_HANDLE);
-    if (handleOut == INVALID_HANDLE_VALUE)
-    {
+    if (handleOut == INVALID_HANDLE_VALUE) {
         return GetLastError();
     }
 
     DWORD returnCode = EnableVirtualTerminal(handleOut);
-    if (returnCode != ERROR_SUCCESS)
-    { // If an error occured
+    if (returnCode != ERROR_SUCCESS) { // If an error occured
         return returnCode;
     }
 
@@ -55,8 +51,7 @@ int main(int argc, char **argv)
     ai.sensors.push_back({}); // B: Apple Y
 
     int32_t brainSize = 5;
-    for (int32_t i = 0; i < brainSize; i++)
-    {
+    for (int32_t i = 0; i < brainSize; i++) {
         ai.brain.neurons.push_back({}); // Empty neurons
     }
 
@@ -69,11 +64,10 @@ int main(int argc, char **argv)
     AssembleBrain(&ai);
 
     const int gamesToRun = 5;
-    Coord size = {30, 30};
+    Coord size = { 30, 30 };
 
-    for (int32_t i = 0; i < gamesToRun; i++)
-    {
-        Game *p_game = SetupGame(size);
+    for (int32_t i = 0; i < gamesToRun; i++) {
+        Game* p_game = SetupGame(size);
         StartGame(p_game, &ai);
 
         // Mutate dna

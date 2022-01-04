@@ -32,44 +32,42 @@ void ResetConsoleModifiers()
     Command(SGR::DEFAULT + SGR::END);
 }
 
-void ResetGrid(Game *game)
+void ResetGrid(Game* game)
 {
     int len = game->lenght;
     for (uint32_t i = 0; i < game->lenght; i++)
         game->p_grid[i].value = 0;
 }
 
-void SpawnApple(Game *game)
+void SpawnApple(Game* game)
 {
 
     Coord newPos;
 
-    do
-    {
+    do {
         newPos = {
             rand() % game->size.X,
-            rand() % game->size.Y};
+            rand() % game->size.Y };
     } while (game->p_grid[newPos.X + newPos.Y * game->size.X].value != GridPos::EMPTY);
 
     game->applePos = newPos;
 }
 
-Game *SetupGame(Coord size)
+Game* SetupGame(Coord size)
 {
     srand((unsigned int)time(NULL));
 
-    Game *game = new Game();
+    Game* game = new Game();
     game->size = size;
     game->lenght = size.X * size.Y;
-    game->lookingDirection = {0, -1}; // UP
-    game->applePos = {15, 10};
+    game->lookingDirection = { 0, -1 }; // UP
+    game->applePos = { 15, 10 };
 
     // Create snake
     game->p_snake = new Coord[game->lenght];
     game->p_snake[0] = game->size / 2;
-    for (uint32_t i = 1; i < game->lenght; i++)
-    {
-        game->p_snake[i] = {0, 0};
+    for (uint32_t i = 1; i < game->lenght; i++) {
+        game->p_snake[i] = { 0, 0 };
     }
 
     // Create grid
@@ -79,47 +77,42 @@ Game *SetupGame(Coord size)
     return game;
 }
 
-void UpdateGrid(Game *game)
+void UpdateGrid(Game* game)
 {
     ResetGrid(game);
 
     // Store reference to grid & snake
-    GridPos *p_grid = game->p_grid;
-    Coord *p_snake = game->p_snake;
+    GridPos* p_grid = game->p_grid;
+    Coord* p_snake = game->p_snake;
 
     // Write apple to grid
     Coord pos = game->applePos;
     p_grid[pos.X + pos.Y * game->size.X].value = GridPos::APPLE;
 
     // Write snake to grid
-    for (uint32_t i = 0; i < game->score + 1; i++)
-    {
+    for (uint32_t i = 0; i < game->score + 1; i++) {
         pos = p_snake[i];
         p_grid[pos.X + pos.Y * game->size.X].value = GridPos::SNAKE;
     }
 }
 
-void DrawGame(Game *game)
+void DrawGame(Game* game)
 {
     // Store reference to grid
-    GridPos *p_grid = game->p_grid;
+    GridPos* p_grid = game->p_grid;
 
     Print(L" ");
-    for (int32_t x = 1; x <= game->size.X; x++)
-    {
+    for (int32_t x = 1; x <= game->size.X; x++) {
         Print(L"__");
     }
     Print(L"\r\n");
 
-    for (int32_t y = 0; y < game->size.Y; y++)
-    {
+    for (int32_t y = 0; y < game->size.Y; y++) {
         Print(L"|");
-        for (int32_t x = 0; x < game->size.X; x++)
-        {
+        for (int32_t x = 0; x < game->size.X; x++) {
             String modifier;
 
-            switch (p_grid[x + y * game->size.X].value)
-            {
+            switch (p_grid[x + y * game->size.X].value) {
             case GridPos::EMPTY:
                 modifier = SGR::BACKGROUND::BLACK;
                 break;
@@ -140,14 +133,13 @@ void DrawGame(Game *game)
     }
 
     Print(L" ");
-    for (int32_t x = 1; x <= game->size.X; x++)
-    {
+    for (int32_t x = 1; x <= game->size.X; x++) {
         Print(L"--");
     }
     Print(L"\r\n");
 }
 
-void PrintGameInfo(Game *game, AI *ai)
+void PrintGameInfo(Game* game, AI* ai)
 {
 
     String str =
@@ -160,12 +152,9 @@ void PrintGameInfo(Game *game, AI *ai)
         L"\r\nRunning: ";
     Print(str);
 
-    if (game->running)
-    {
+    if (game->running) {
         Print(L"TRUE", SGR::FOREGROUND::BRIGHT_GREEN + SGR::END);
-    }
-    else
-    {
+    } else {
         Print(L"FALSE", SGR::FOREGROUND::BRIGHT_RED + SGR::END);
     }
     ResetConsoleModifiers();
@@ -185,35 +174,28 @@ void PrintGameInfo(Game *game, AI *ai)
     Print(str);
 }
 
-void MoveSnake(Game *game)
+void MoveSnake(Game* game)
 {
     // Store reference of snake
-    Coord *p_snake = game->p_snake;
+    Coord* p_snake = game->p_snake;
     Coord targetCoord = p_snake[0] + game->lookingDirection;
 
     // Check for collision.
     // 1. Out of bounds
     if (targetCoord.X < 0 || targetCoord.X >= game->size.X ||
-        targetCoord.Y < 0 || targetCoord.Y >= game->size.Y)
-    {
+        targetCoord.Y < 0 || targetCoord.Y >= game->size.Y) {
         game->running = false;
-    }
-    else
-    {
+    } else {
         GridPos targetPos = game->p_grid[targetCoord.X + targetCoord.Y * game->size.X];
 
         // 2. Moved into snake body
-        if (targetPos.value == GridPos::SNAKE)
-        {
+        if (targetPos.value == GridPos::SNAKE) {
             game->running = false;
-        }
-        else
-        {
+        } else {
             // 3. Apple collected
             bool gotFood = false;
             Coord tail;
-            if (targetPos.value == GridPos::APPLE)
-            {
+            if (targetPos.value == GridPos::APPLE) {
                 gotFood = true;
                 SpawnApple(game);
 
@@ -221,16 +203,14 @@ void MoveSnake(Game *game)
                 tail = p_snake[game->score];
             }
 
-            for (uint32_t i = 0; i < game->score + 1; i++)
-            {
+            for (uint32_t i = 0; i < game->score + 1; i++) {
                 Coord temp = p_snake[i];
                 p_snake[i] = targetCoord;
                 targetCoord = temp;
             }
 
             // Paste tail where previous tail was
-            if (gotFood)
-            {
+            if (gotFood) {
                 game->score++;
                 p_snake[game->score] = tail;
             }
@@ -238,13 +218,12 @@ void MoveSnake(Game *game)
     }
 }
 
-void StartGame(Game *game, AI *ai)
+void StartGame(Game* game, AI* ai)
 {
     game->running = true;
     Command(CURSOR::SAVE_POS);
     Command(CURSOR::VISIBILITY_OFF);
-    while (game->running)
-    {
+    while (game->running) {
         UpdateGrid(game);
 
         Command(CURSOR::LOAD_POS);

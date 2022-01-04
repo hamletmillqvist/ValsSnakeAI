@@ -16,7 +16,8 @@ struct Coord {
 
     static Coord Empty() { return Coord(); }
 
-    Coord operator / (int32_t divider) {
+    Coord operator / (int32_t divider)
+    {
         if (divider == 0) {
             return Coord::Empty();
         }
@@ -24,7 +25,8 @@ struct Coord {
         return { X / divider, Y / divider };
     }
 
-    Coord operator + (Coord other) {
+    Coord operator + (Coord other)
+    {
         return { X + other.X, Y + other.Y };
     }
 };
