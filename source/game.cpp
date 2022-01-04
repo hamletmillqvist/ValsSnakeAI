@@ -61,7 +61,7 @@ Game* SetupGame(Coord size)
     game->size = size;
     game->lenght = size.X * size.Y;
     game->lookingDirection = { 0, -1 }; // UP
-    game->applePos = { 15, 10 };
+    game->applePos = { 10, 5 };
 
     // Create snake
     game->p_snake = new Coord[game->lenght];

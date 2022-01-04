@@ -37,34 +37,34 @@ int main(int argc, char** argv)
     }
 
     AI ai;
-    ai.sensors.push_back({}); // 0: Map width
-    ai.sensors.push_back({}); // 1: Map height
-    ai.sensors.push_back({}); // 2: Map current direction
-    ai.sensors.push_back({}); // 3: Eye Left
-    ai.sensors.push_back({}); // 4: Eye Right
-    ai.sensors.push_back({}); // 5: Eye Up
-    ai.sensors.push_back({}); // 6: Eye Down
-    ai.sensors.push_back({}); // 7: Snake lenght
-    ai.sensors.push_back({}); // 8: Snake Head X
-    ai.sensors.push_back({}); // 9: Snake Head Y
-    ai.sensors.push_back({}); // A: Apple X
-    ai.sensors.push_back({}); // B: Apple Y
+    ai.Sensors.push_back({}); // 0: Map width
+    ai.Sensors.push_back({}); // 1: Map height
+    ai.Sensors.push_back({}); // 2: Map current direction
+    ai.Sensors.push_back({}); // 3: Eye Left
+    ai.Sensors.push_back({}); // 4: Eye Right
+    ai.Sensors.push_back({}); // 5: Eye Up
+    ai.Sensors.push_back({}); // 6: Eye Down
+    ai.Sensors.push_back({}); // 7: Snake lenght
+    ai.Sensors.push_back({}); // 8: Snake Head X
+    ai.Sensors.push_back({}); // 9: Snake Head Y
+    ai.Sensors.push_back({}); // A: Apple X
+    ai.Sensors.push_back({}); // B: Apple Y
 
     int32_t brainSize = 5;
     for (int32_t i = 0; i < brainSize; i++) {
-        ai.brain.neurons.push_back({}); // Empty neurons
+        ai.Neurons.push_back({}); // Empty neurons
     }
 
-    ai.motors.push_back({}); // 0: Move Left
-    ai.motors.push_back({}); // 1: Move right
-    ai.motors.push_back({}); // 2: Move forward
+    ai.Motors.push_back({}); // 0: Move Left
+    ai.Motors.push_back({}); // 1: Move right
+    ai.Motors.push_back({}); // 2: Move forward
 
     ai.GENOME = L"S0500TF M0001TF C0001T7"; // Initial GENOME
 
     AssembleBrain(&ai);
 
     const int gamesToRun = 5;
-    Coord size = { 30, 30 };
+    Coord size = { 20, 20 };
 
     for (int32_t i = 0; i < gamesToRun; i++) {
         Game* p_game = SetupGame(size);

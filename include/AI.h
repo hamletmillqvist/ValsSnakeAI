@@ -22,35 +22,40 @@ struct Connection;
 
 enum ConnectionType {
 	Undefined = -1,
-	SensorToNeuron,
-	NeuronToNeuron
+	FromSensor,
+	FromNeuron
 };
 
 struct Sensor {
-	float strength = 0;
+	float Strength = 0;
 };
 
 struct Neuron {
-	float strength = 0;
-	std::vector<Connection> connections;
+	float Strength = 0;
+	std::vector<Connection> Connections;
 };
 
 struct Connection {
 	ConnectionType type;
-	float weight = 1;
-};
+	float Weight = 1;
 
-struct Brain {
-	std::vector<Neuron> neurons;
+	union {
+		Sensor* p_sensor;
+		Neuron* p_neuron;
+	} Source;
+
+	Neuron* p_Target;
 };
 
 struct AI {
-	Brain brain;
-	std::vector<Sensor> sensors;
-	std::vector<Neuron> motors;
-	std::vector<Connection> connections;
+	std::vector<Neuron> Neurons;
+	std::vector<Sensor> Sensors;
+	std::vector<Neuron> Motors;
+	//std::vector<Connection> Connections; // Could be redundant since neurons already have connections stored.
+	int ConnectionCount = 0;
 	String GENOME = L"";
 };
 
 void AssembleBrain(AI* ai);
 void ProcessAI(AI* ai, Game* game);
+const std::vector<Connection> GetConnectionList(AI* ai);
