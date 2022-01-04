@@ -1,1 +1,1 @@
-add_executable(vsai_exe main.cpp stringdefs.cpp game.cpp ai.cpp)
+add_executable(vsai main.cpp stringdefs.cpp game.cpp ai.cpp)
