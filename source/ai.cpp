@@ -1,4 +1,4 @@
-#include <AI.h>
+#include <ai.h>
 
 void AssembleBrain(AI *ai)
 {

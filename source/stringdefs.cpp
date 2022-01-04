@@ -1,4 +1,4 @@
-#include <StringDefs.h>
+#include <stringdefs.h>
 
 // Probably a better way of doing this, but that's not the goal of this program.
 // https://stackoverflow.com/a/5167641

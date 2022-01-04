@@ -2,10 +2,10 @@
 #include <time.h>
 #include <iostream>
 
-#include <Game.h>
-#include <VirtualKeycodes.h>
-#include <StringDefs.h>
-#include <AI.h>
+#include <game.h>
+#include <virtual_keycodes.h>
+#include <stringdefs.h>
+#include <ai.h>
 
 using namespace VIRTUAL_KEYCODES;
 

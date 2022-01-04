@@ -2,7 +2,7 @@
 #include <string>
 #include <vector>
 
-#include <StringDefs.h>
+#include <stringdefs.h>
 
 // GENOME DEFINITION
 // A genome is an array of genes.
